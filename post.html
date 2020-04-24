@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>XMLHttpRequest</title>
+ </head>
+ <body>
+	<form id="create">
+		<label for="name">Name</label>
+		<input name="name" id="name">
+		<br><br>
+		<label for="job">Job</label>
+		<input name="job" id="job">
+		<br><br>
+		<button type="submit" id="submit-form">
+		  Create User
+		</button>
+	  </form>
+	  <div id="info-box"></div>
+  <script>
+	var create_form = document.getElementById("create"),
+		info_box = document.getElementById("info-box");
+
+	create_form.addEventListener("submit", (event) => {
+		info_box.innerHTML = "Permintaan sedang dilakukan ...";
+		var input_name = document.querySelector("input[name=name]").value,
+			input_job = document.querySelector("input[name=job]").value;
+		
+		var request = new XMLHttpRequest();
+		request.open("POST", "https://reqres.in/api/users");
+		request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		request.send("name="+ input_name +"&job=" + input_job);
+		request.addEventListener("load", () => {
+				info_box.innerHTML = "Permintaan telah selesai. <br> Status: " + request.status + "<br> Response Text: " + request.responseText;
+		});
+
+			event.preventDefault();
+	});
+  </script>
+ </body>
+</html>

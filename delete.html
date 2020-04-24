@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>XMLHttpRequest</title>
+ </head>
+ <body>
+	<form id="delete">
+		<label for="ids">ID</label>
+		<input name="ids" id="ids">
+		<br><br>
+		<button type="submit" id="submit-form">
+			Delete User
+		</button>
+	  </form>
+	  <div id="info-box"></div>
+  <script>
+	var delete_form = document.getElementById("delete"),
+		info_box = document.getElementById("info-box");
+
+		delete_form.addEventListener("submit", (event) => {
+		info_box.innerHTML = "Permintaan sedang dilakukan ...";
+		var input_id = document.querySelector("input[name=ids]").value;
+		
+		var request = new XMLHttpRequest();
+		request.open("DELETE", "https://reqres.in/api/users/"+ input_id);
+		request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		request.addEventListener("load", () => {
+				info_box.innerHTML = "Permintaan telah selesai. <br> Status: " + request.status;
+		});
+			event.preventDefault();
+	});
+
+	
+  </script>
+ </body>
+</html>
